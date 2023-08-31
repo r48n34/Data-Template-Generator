@@ -1,3 +1,13 @@
+
+export function checkAllNecessaryKeyExistInFrame(): string[]{
+
+    const allTextNode = (figma.currentPage.selection[0] as FrameNode | GroupNode).findAll(node => {
+        return node.type === "TEXT"
+    })
+
+    return allTextNode.map( v => v.name || "none" );
+}
+
 export function generateFrame(data: Record<string, string>[]){
 
     const columnsKeys: string[] = Object.keys(data[0]);
@@ -17,7 +27,7 @@ export function generateFrame(data: Record<string, string>[]){
         })
 
         for(let v of allTextNode){
-            const rawName = v.name.replace("#", "");
+            const rawName = v.name.replace("@", "");
 
             if(v.type === "TEXT" && v.name && columnsKeys.includes(rawName)){
                 console.log("MATCH")

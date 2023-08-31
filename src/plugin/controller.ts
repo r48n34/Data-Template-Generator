@@ -1,5 +1,5 @@
 import { MsgTypes } from "./interface";
-import { generateFrame } from "./utils/generateFrame";
+import { checkAllNecessaryKeyExistInFrame, generateFrame } from "./utils/generateFrame";
 
 figma.showUI(__html__, {
     width: 800,
@@ -16,24 +16,36 @@ figma.on("selectionchange", async () => {
         console.log(figma.currentPage.selection[0].type)
         
         if(figma.currentPage.selection[0].type === "FRAME" || figma.currentPage.selection[0].type === "GROUP"){
+
+            const cols = checkAllNecessaryKeyExistInFrame();
+            
             figma.ui.postMessage({
                 type: 'is-frame-group-selected',
-                data: true,
+                data: {
+                    status: true,
+                    cols: cols
+                },
             });
-            
+
             return
         }
         
         figma.ui.postMessage({
             type: 'is-frame-group-selected',
-            data: false,
+            data: {
+                status: false,
+                cols: []
+            },
         });
         
     }
     catch (error) {
         figma.ui.postMessage({
             type: 'is-frame-group-selected',
-            data: false,
+            data: {
+                status: false,
+                cols: []
+            },
         });
     }
 

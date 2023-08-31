@@ -14,8 +14,8 @@ function TimeLineGuide({ activeNumber = 0 }: TimeLineGuideProps) {
                     { activeNumber === 0 && <Text color="dimmed" size="sm">Import csv file from left section</Text> }
                 </Timeline.Item>
 
-                <Timeline.Item bullet={<IconGitCommit size={12} />} title="Adjust Frame Text">
-                    { activeNumber === 1 && <Text color="dimmed" size="sm">See if the CSV data is valid</Text> }
+                <Timeline.Item bullet={<IconGitCommit size={12} />} title="Select Frame">
+                    { activeNumber === 1 && <Text color="dimmed" size="sm">See if the CSV data is valid & select a frame</Text> }
                 </Timeline.Item>
 
                 <Timeline.Item title="Click generate" bullet={<IconGitPullRequest size={12} />} lineVariant="dashed">

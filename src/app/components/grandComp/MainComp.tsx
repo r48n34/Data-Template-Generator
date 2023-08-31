@@ -4,10 +4,10 @@ import { DropComp } from "../UtilsComp/DropComp";
 import FortuneSheetComp from "../UtilsComp/FortuneSheetComp";
 import TimeLineGuide from "../UtilsComp/TimeLineGuide";
 import DetailsShowsComp from "../UtilsComp/DetailsShowsComp";
-import { CSVDataArray } from "../../interface/generatInterface";
+import { CSVDataArray, CheckNodeTextType } from "../../interface/generatInterface";
 
 interface MainCompProps {
-    isFrameGroupSelected: boolean
+    isFrameGroupSelected: CheckNodeTextType
 }
 
 function MainComp({ isFrameGroupSelected }:MainCompProps) {
@@ -16,13 +16,13 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
     const activeNumber = Array.isArray(data) && data.length >= 1 ? 1 : 0;
 
     const onCreate = () => {
-        // const count = parseInt(textbox.current.value, 10);
         parent.postMessage({ pluginMessage: { type: 'generate-frame', data: data } }, '*');
     };
 
     return (
         <>
             <Container>
+                <Space h="md" />
                 <Space h="md" />
 
                 <Grid>
@@ -33,15 +33,19 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
                     <Grid.Col span={9}>
                         <DropComp setData={setData} />
                         <Space h="md" />
+
                         <FortuneSheetComp data={data} />
                         <Space h="md" />
-                        <DetailsShowsComp data={data} />
 
+                        <DetailsShowsComp data={data} frameInfo={isFrameGroupSelected}/>
                         { Array.isArray(data) && data.length >= 1 && (
                             <Group position="right">
                                 <Button
                                     onClick={() => onCreate()}
-                                    disabled={!isFrameGroupSelected}
+                                    disabled={
+                                           !isFrameGroupSelected.status
+                                        || Object.keys(data[0]).map( v => "@" + v).filter(x => !isFrameGroupSelected.cols.includes(x)).length >= 1
+                                    }
                                 >
                                     Generate
                                 </Button>

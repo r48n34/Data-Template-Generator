@@ -20,8 +20,6 @@ export function DropComp(props: DropCompProps) {
             return
         }
 
-        // console.log(files[0]);
-
         const reader = new FileReader();
         reader.onload = async ({ target }) => {
 

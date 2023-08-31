@@ -1,21 +1,24 @@
 import React from 'react';
 import { Grid, Text } from '@mantine/core';
-import { CSVDataArray } from '../../interface/generatInterface';
+import { CSVDataArray, CheckNodeTextType } from '../../interface/generatInterface';
 
 type DetailsShowsCompProps = {
     data: CSVDataArray;
+    frameInfo: CheckNodeTextType
 }
 
-function DetailsShowsComp({ data }: DetailsShowsCompProps){
+function DetailsShowsComp({ data, frameInfo }: DetailsShowsCompProps){
 
     if(!Array.isArray(data) || data.length <= 0){
        return (<></>) 
     }
 
+    const missingStuff = Object.keys(data[0]).map( v => "@" + v).filter(x => !frameInfo.cols.includes(x))
+
     return (
         <>
         <Grid>
-            <Grid.Col span={12}>
+            <Grid.Col span={8}>
                 <Text color="dimmed" size="sm">Headers: (Total {Object.keys(data[0]).length})</Text>
                 <Text size="sm">{Object.keys(data[0]).join(", ")}</Text>
             </Grid.Col>
@@ -26,7 +29,16 @@ function DetailsShowsComp({ data }: DetailsShowsCompProps){
             </Grid.Col>
 
             <Grid.Col span={4}>
+                <Text c={ frameInfo.status ? "dimmed" : "red" } size="sm">Frame Selected</Text>
+                <Text size="sm">{frameInfo.status ? "Yes" : "No"}</Text>
+            </Grid.Col>
 
+            <Grid.Col span={4}>
+                <Text size="sm" c={ missingStuff.length >= 1 ? "red" : "dimmed"}>Missing Text Node</Text>
+                { missingStuff.length >= 1 
+                    ? (<Text size="sm">{missingStuff.join(", ")}</Text>)
+                    : (<Text size="sm">Good, nothing missing</Text>)
+                }
             </Grid.Col>
         </Grid>
         </>
