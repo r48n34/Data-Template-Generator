@@ -13,7 +13,7 @@ function App() {
             const { type, data } = event.data.pluginMessage;
 
             if (type === 'is-frame-group-selected') {
-                console.log("Back data", data);
+                // console.log("Back data", data);
                 setIsFrameGroupSelected(data);
             }
         };

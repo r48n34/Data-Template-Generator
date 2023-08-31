@@ -19,7 +19,7 @@ function TimeLineGuide({ activeNumber = 0 }: TimeLineGuideProps) {
                 </Timeline.Item>
 
                 <Timeline.Item title="Click generate" bullet={<IconGitPullRequest size={12} />} lineVariant="dashed">
-                    { activeNumber === 1 && <Text color="dimmed" size="sm">Click generate</Text> }
+                    { activeNumber === 2 && <Text color="dimmed" size="sm">Good to go! Click generate.</Text> }
                 </Timeline.Item>
             </Timeline>
         </>

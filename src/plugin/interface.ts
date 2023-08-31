@@ -1,4 +1,7 @@
 export interface MsgTypes {
     type: string
-    data: Record<string, string>[]
+    data: {
+        data: Record<string, string>[]
+        name: string
+    }
 }

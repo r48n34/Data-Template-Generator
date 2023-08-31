@@ -26,10 +26,10 @@ export function DropComp(props: DropCompProps) {
             const csv = Papa.parse(target.result as any, { header: true });
             const parsedData = csv?.data;
 
-            const columnsKeys = Object.keys(parsedData[0]);
+            // const columnsKeys = Object.keys(parsedData[0]);
 
-            console.log(columnsKeys);
-            console.log(parsedData);
+            // console.log(columnsKeys);
+            // console.log(parsedData);
 
             !!props.setData && props.setData(parsedData as CSVDataArray)
         };
@@ -39,10 +39,11 @@ export function DropComp(props: DropCompProps) {
 
     return (
         <Box>
+        <Text mb={6} c="dimmed" fz={12}>Import CSV</Text>
         <Dropzone
             onDrop={(files) => reciveFile(files)}
             onReject={(files) => console.log('rejected files', files)}
-            maxSize={3 * 1024 ** 90}
+            maxSize={3 * 1024 ** 180}
             accept={['text/csv']}
             multiple={false}
             {...props}
@@ -71,7 +72,7 @@ export function DropComp(props: DropCompProps) {
                         Drag csv here or click to select file
                     </Text>
                     <Text size="sm" color="dimmed" inline mt={7}>
-                        Attach a csv file, and should not exceed 90mb
+                        Attach a csv file, and should not exceed 180mb
                     </Text>
                 </div>
             </Group>

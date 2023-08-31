@@ -1,6 +1,6 @@
 import React, { useEffect, useRef }  from 'react';
 import { Workbook, WorkbookInstance } from "@fortune-sheet/react";
-import { Box } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { CSVDataArray } from '../../interface/generatInterface';
 
 import "@fortune-sheet/react/dist/index.css"
@@ -57,6 +57,8 @@ function FortuneSheetComp({ data }: FortuneSheetCompProps){
     return (
         <>
         { data && Array.isArray(data) && data.length >= 1 &&  (
+            <>
+            <Text mb={6} c="dimmed" fz={12}>Sheet View (*View only, changes will NOT apply to generation)</Text>
             <Box style={{ height: "220px" }}>
                 <Workbook
                     ref={ref}
@@ -66,6 +68,7 @@ function FortuneSheetComp({ data }: FortuneSheetCompProps){
                     showFormulaBar={false}
                 />
             </Box>
+            </>
         )}
         </>
     )

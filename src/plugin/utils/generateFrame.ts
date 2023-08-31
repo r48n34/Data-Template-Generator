@@ -8,7 +8,7 @@ export function checkAllNecessaryKeyExistInFrame(): string[]{
     return allTextNode.map( v => v.name || "none" );
 }
 
-export function generateFrame(data: Record<string, string>[]){
+export function generateFrame(data: Record<string, string>[], name: string){
 
     const columnsKeys: string[] = Object.keys(data[0]);
     const copyNode = figma.currentPage.selection[0].clone();
@@ -20,7 +20,7 @@ export function generateFrame(data: Record<string, string>[]){
     for(let i = 0; i < data.length; i ++){
         const newCopy = copyNode.clone() as FrameNode | GroupNode;
 
-        newCopy.name = `${newCopy.name}_${i + 1}`
+        
 
         // For y pol
         newCopy.x = oldX[i % oldX.length];
@@ -41,13 +41,17 @@ export function generateFrame(data: Record<string, string>[]){
             const rawName = v.name.replace("@", "");
 
             if(v.type === "TEXT" && v.name && columnsKeys.includes(rawName)){
-                console.log("MATCH")
+                // console.log("MATCH")
                 v.characters = data[i][rawName]
             }
         }
+
+        newCopy.name = data[i][name]
 
         figma.currentPage.appendChild(newCopy);
         oldY = newCopy.y
         // oldX = newCopy.x
     }
+
+    figma.notify(`[CSV] Success to generate ${data.length} templates`);
 }
