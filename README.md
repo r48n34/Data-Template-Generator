@@ -19,11 +19,11 @@ This plugin can be use in the following cases:
 
 Usage:
 
-1. Open this plugins
+1. Open this plugin
 2. Prepare a valid CSV / XLSX file
 3. Upload to the plugin by drag-and-drop or select
-4. Rename your frame text node that starting with `@` (e.g. `@name`) that natch with your data header
-5. Select the Frame / Group that you want to generate
+4. Rename your frame text node that starting with `@` (e.g. `@name`) that match with your data header
+5. Select the Frame / Group that you want to duplicate
 6. If all things ready, the plugin will allow you to generate 
 7. Enjoy your stuff
 
