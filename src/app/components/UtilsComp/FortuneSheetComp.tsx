@@ -1,8 +1,9 @@
 import React, { useEffect, useRef }  from 'react';
 import { Workbook, WorkbookInstance } from "@fortune-sheet/react";
-import "@fortune-sheet/react/dist/index.css"
-import { CSVDataArray } from './DropComp';
 import { Box } from '@mantine/core';
+import { CSVDataArray } from '../../interface/generatInterface';
+
+import "@fortune-sheet/react/dist/index.css"
 
 type FortuneSheetCompProps = {
     data: CSVDataArray;
@@ -13,7 +14,7 @@ function FortuneSheetComp({ data }: FortuneSheetCompProps){
     const ref = useRef<WorkbookInstance>(null);
 
     useEffect(() => {
-        arrayToCellData(data)
+        arrayToCellData(data);
     }, [data]);
 
     function arrayToCellData(data: CSVDataArray){
@@ -50,20 +51,22 @@ function FortuneSheetComp({ data }: FortuneSheetCompProps){
             ref.current.setCellValue(v.row, v.col, v.val)
         }
 
-        // return result
+        ref.current.freeze("row", { row: 0, column: 0 })
     }
 
     return (
         <>
-        <Box style={{ height: "300px" }}>
-            <Workbook
-                ref={ref}
-                data={[{ name: 'Sheet1', celldata: [] }]}
-                showToolbar={false}
-                showSheetTabs={false}
-                showFormulaBar={false}
-            />
-        </Box>
+        { data && Array.isArray(data) && data.length >= 1 &&  (
+            <Box style={{ height: "220px" }}>
+                <Workbook
+                    ref={ref}
+                    data={[{ name: 'Sheet1', celldata: [] }]}
+                    showToolbar={false}
+                    showSheetTabs={false}
+                    showFormulaBar={false}
+                />
+            </Box>
+        )}
         </>
     )
 }

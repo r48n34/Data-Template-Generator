@@ -1,32 +1,28 @@
-import React, { useEffect, useState }  from 'react';
+import React from 'react';
 
-import { Group, Text, useMantineTheme, rem } from '@mantine/core';
+import { Group, Text, useMantineTheme, rem, Box } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, FileWithPath } from '@mantine/dropzone';
 
 import Papa from "papaparse";
-import FortuneSheetComp from './FortuneSheetComp';
+import { CSVDataArray } from '../../interface/generatInterface';
 
-export type CSVDataArray = Record<string, string>[]
+interface DropCompProps extends Partial<DropzoneProps> {
+    setData: Function
+}
 
-export function DropComp(props: Partial<DropzoneProps>) {
+export function DropComp(props: DropCompProps) {
     const theme = useMantineTheme();
 
-    // const [file, setFile] = useState("");
-    const [data, setData] = useState<CSVDataArray>([]);
-    
     function reciveFile(files: FileWithPath[]){
 
         if(!files){
             return
         }
 
-        console.log(files[0]);
+        // console.log(files[0]);
 
         const reader = new FileReader();
- 
-        // Event listener on reader when the file
-        // loads, we parse it and set the data.
         reader.onload = async ({ target }) => {
 
             const csv = Papa.parse(target.result as any, { header: true });
@@ -37,29 +33,23 @@ export function DropComp(props: Partial<DropzoneProps>) {
             console.log(columnsKeys);
             console.log(parsedData);
 
-            setData(parsedData as CSVDataArray)
+            !!props.setData && props.setData(parsedData as CSVDataArray)
         };
 
         reader.readAsText(files[0]);
     }
 
-    useEffect(() => {
-        console.log("DATA", data);
-        // data.length >= 1 && arrayToCellData(data);
-    }, [data]);
-
-
     return (
-        <>
+        <Box>
         <Dropzone
             onDrop={(files) => reciveFile(files)}
             onReject={(files) => console.log('rejected files', files)}
-            maxSize={3 * 1024 ** 12}
+            maxSize={3 * 1024 ** 90}
             accept={['text/csv']}
             multiple={false}
             {...props}
         >
-            <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
+            <Group position="center" spacing="xl" style={{ minHeight: rem(100), pointerEvents: 'none' }}>
                 <Dropzone.Accept>
                     <IconUpload
                         size="3.2rem"
@@ -80,17 +70,14 @@ export function DropComp(props: Partial<DropzoneProps>) {
 
                 <div>
                     <Text size="xl" inline>
-                        Drag images here or click to select files
+                        Drag csv here or click to select file
                     </Text>
                     <Text size="sm" color="dimmed" inline mt={7}>
-                        Attach a csv file, and should not exceed 5mb
+                        Attach a csv file, and should not exceed 90mb
                     </Text>
                 </div>
             </Group>
-        </Dropzone>
-        
-        <FortuneSheetComp data={data}/>
-        
-        </>
+        </Dropzone>    
+        </Box>
     );
 }
