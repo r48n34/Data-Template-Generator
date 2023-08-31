@@ -5,15 +5,16 @@ import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, FileWithPath } from '@mantine/dropzone';
 
 import Papa from "papaparse";
+import FortuneSheetComp from './FortuneSheetComp';
 
-type CSVDataArray = Record<string, string>[]
+export type CSVDataArray = Record<string, string>[]
 
 export function DropComp(props: Partial<DropzoneProps>) {
     const theme = useMantineTheme();
 
     // const [file, setFile] = useState("");
     const [data, setData] = useState<CSVDataArray>([]);
-
+    
     function reciveFile(files: FileWithPath[]){
 
         if(!files){
@@ -43,10 +44,13 @@ export function DropComp(props: Partial<DropzoneProps>) {
     }
 
     useEffect(() => {
-        console.log(data);
-    }, []);
+        console.log("DATA", data);
+        // data.length >= 1 && arrayToCellData(data);
+    }, [data]);
+
 
     return (
+        <>
         <Dropzone
             onDrop={(files) => reciveFile(files)}
             onReject={(files) => console.log('rejected files', files)}
@@ -79,10 +83,14 @@ export function DropComp(props: Partial<DropzoneProps>) {
                         Drag images here or click to select files
                     </Text>
                     <Text size="sm" color="dimmed" inline mt={7}>
-                        Attach as many files as you like, each file should not exceed 5mb
+                        Attach a csv file, and should not exceed 5mb
                     </Text>
                 </div>
             </Group>
         </Dropzone>
+        
+        <FortuneSheetComp data={data}/>
+        
+        </>
     );
 }

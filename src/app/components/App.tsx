@@ -2,7 +2,7 @@ import React from 'react';
 // import logo from '../assets/logo.svg';
 // import '../styles/ui.css';
 import { Container, MantineProvider, Space } from '@mantine/core';
-import { DropComp } from './DropComp';
+import { DropComp } from './UtilsComp/DropComp';
 
 function App() {
     // const textbox = React.useRef<HTMLInputElement>(undefined);
