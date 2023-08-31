@@ -1,5 +1,9 @@
 # Data Template Generator
 
+https://www.figma.com/community/plugin/1279091016427867596/Data-Template-Generator
+
+![https://www.figma.com/community/plugin/1279091016427867596/Data-Template-Generator](/assert/banners.png)
+
 Quick easy user-friendly data template generator to save your time!
 
 ## Intro
