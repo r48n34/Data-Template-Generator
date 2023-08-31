@@ -8,22 +8,29 @@ figma.showUI(__html__, {
 
 figma.on("selectionchange", async () => {
 
-    await figma.loadFontAsync({ family: "Inter", style: "Regular" })
+    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
     try {
+
+        console.log("HEELLOOOOOO")
+        console.log(figma.currentPage.selection[0].type)
         
         if(figma.currentPage.selection[0].type === "FRAME" || figma.currentPage.selection[0].type === "GROUP"){
             figma.ui.postMessage({
                 type: 'is-frame-group-selected',
                 data: true,
             });
+            
+            return
         }
-        else{
-            figma.ui.postMessage({
-                type: 'is-frame-group-selected',
-                data: false,
-            });
-        }
-    } catch (error) {
+        
+        figma.ui.postMessage({
+            type: 'is-frame-group-selected',
+            data: false,
+        });
+        
+    }
+    catch (error) {
         figma.ui.postMessage({
             type: 'is-frame-group-selected',
             data: false,

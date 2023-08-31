@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Grid, Text } from '@mantine/core';
 import { CSVDataArray } from '../../interface/generatInterface';
 
