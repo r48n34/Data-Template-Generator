@@ -14,12 +14,23 @@ export function generateFrame(data: Record<string, string>[]){
     const copyNode = figma.currentPage.selection[0].clone();
     figma.currentPage.selection = []
     
+    let oldX = [1,2,3,4,5].map( v => copyNode.x + ( (copyNode.width + 80) * v) + 100);
     let oldY = copyNode.y;
+
     for(let i = 0; i < data.length; i ++){
         const newCopy = copyNode.clone() as FrameNode | GroupNode;
 
+        newCopy.name = `${newCopy.name}_${i + 1}`
+
         // For y pol
-        newCopy.y = oldY + newCopy.height + 100;
+        newCopy.x = oldX[i % oldX.length];
+
+        if(i % 5 === 0){
+            newCopy.y = oldY + newCopy.height + 100;
+        }
+        else{
+            newCopy.y = oldY;
+        }
 
         // Entire document nodes search
         const allTextNode = newCopy.findAll(node => {
@@ -37,5 +48,6 @@ export function generateFrame(data: Record<string, string>[]){
 
         figma.currentPage.appendChild(newCopy);
         oldY = newCopy.y
+        // oldX = newCopy.x
     }
 }
