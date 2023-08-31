@@ -20,8 +20,6 @@ export function generateFrame(data: Record<string, string>[], name: string){
     for(let i = 0; i < data.length; i ++){
         const newCopy = copyNode.clone() as FrameNode | GroupNode;
 
-        
-
         // For y pol
         newCopy.x = oldX[i % oldX.length];
 
@@ -41,7 +39,6 @@ export function generateFrame(data: Record<string, string>[], name: string){
             const rawName = v.name.replace("@", "");
 
             if(v.type === "TEXT" && v.name && columnsKeys.includes(rawName)){
-                // console.log("MATCH")
                 v.characters = data[i][rawName]
             }
         }
@@ -50,7 +47,6 @@ export function generateFrame(data: Record<string, string>[], name: string){
 
         figma.currentPage.appendChild(newCopy);
         oldY = newCopy.y
-        // oldX = newCopy.x
     }
 
     figma.notify(`[CSV] Success to generate ${data.length} templates`);

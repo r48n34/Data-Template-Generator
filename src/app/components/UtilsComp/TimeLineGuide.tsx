@@ -10,8 +10,8 @@ function TimeLineGuide({ activeNumber = 0 }: TimeLineGuideProps) {
     return (
         <>
             <Timeline active={activeNumber} bulletSize={24} lineWidth={2}>
-                <Timeline.Item bullet={<IconGitBranch size={12} />} title="Import CSV">
-                    { activeNumber === 0 && <Text color="dimmed" size="sm">Import csv file from left section</Text> }
+                <Timeline.Item bullet={<IconGitBranch size={12} />} title="Import Data">
+                    { activeNumber === 0 && <Text color="dimmed" size="sm">Import data from left section</Text> }
                 </Timeline.Item>
 
                 <Timeline.Item bullet={<IconGitCommit size={12} />} title="Select Frame">

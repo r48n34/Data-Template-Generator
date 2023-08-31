@@ -5,6 +5,7 @@ import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, FileWithPath } from '@mantine/dropzone';
 
 import Papa from "papaparse";
+import XLSX from "xlsx";
 import { CSVDataArray } from '../../interface/generatInterface';
 
 interface DropCompProps extends Partial<DropzoneProps> {
@@ -14,7 +15,7 @@ interface DropCompProps extends Partial<DropzoneProps> {
 export function DropComp(props: DropCompProps) {
     const theme = useMantineTheme();
 
-    function reciveFile(files: FileWithPath[]){
+    async function reciveFile(files: FileWithPath[]){
 
         if(!files){
             return
@@ -28,23 +29,32 @@ export function DropComp(props: DropCompProps) {
 
             // const columnsKeys = Object.keys(parsedData[0]);
 
-            // console.log(columnsKeys);
-            // console.log(parsedData);
-
             !!props.setData && props.setData(parsedData as CSVDataArray)
         };
 
-        reader.readAsText(files[0]);
+        if(files[0].type === "text/csv"){
+            reader.readAsText(files[0]);
+        }
+        else if(files[0].type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+            const data = await files[0].arrayBuffer();
+            const workbook = XLSX.read(data);
+
+            const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const result:object[] = XLSX.utils.sheet_to_json(first_worksheet, { header: 0, raw:true });
+
+            !!props.setData && props.setData(result as CSVDataArray)
+        }
+
     }
 
     return (
         <Box>
-        <Text mb={6} c="dimmed" fz={12}>Import CSV</Text>
+        <Text mb={6} c="dimmed" fz={12}>Import Data</Text>
         <Dropzone
             onDrop={(files) => reciveFile(files)}
             onReject={(files) => console.log('rejected files', files)}
-            maxSize={3 * 1024 ** 180}
-            accept={['text/csv']}
+            maxSize={3 * 1024 ** 300}
+            accept={['text/csv', "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]}
             multiple={false}
             {...props}
         >
@@ -69,10 +79,10 @@ export function DropComp(props: DropCompProps) {
 
                 <div>
                     <Text size="xl" inline>
-                        Drag csv here or click to select file
+                        Drag file here or click to select
                     </Text>
                     <Text size="sm" color="dimmed" inline mt={7}>
-                        Attach a csv file, and should not exceed 180mb
+                        Accepted: CSV / XLSX file, smaller than 300mb
                     </Text>
                 </div>
             </Group>
