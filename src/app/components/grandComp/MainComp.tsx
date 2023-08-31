@@ -5,6 +5,8 @@ import FortuneSheetComp from "../UtilsComp/FortuneSheetComp";
 import TimeLineGuide from "../UtilsComp/TimeLineGuide";
 import DetailsShowsComp from "../UtilsComp/DetailsShowsComp";
 import { CSVDataArray, CheckNodeTextType } from "../../interface/generatInterface";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorComp from "../UtilsComp/ErrorComp";
 
 interface MainCompProps {
     isFrameGroupSelected: CheckNodeTextType
@@ -15,6 +17,10 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
     const [data, setData] = useState<CSVDataArray>([]);
     const [colToRenameFrame, setColToRenameFrame] = useState<string | null>(null);
     const activeNumber = checkActiveNumber();
+
+    function resetFunc(){
+        setData([])
+    }
 
     function checkActiveNumber(){
         if(!Array.isArray(data) || data.length <= 0){
@@ -47,6 +53,7 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
 
     return (
         <>
+            <ErrorBoundary fallback={<ErrorComp resetFunc={resetFunc}/>}>
             <Container>
                 <Grid mt={12}>
                     <Grid.Col span={3}>
@@ -91,6 +98,7 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
                 </Grid>
                 
             </Container>
+            </ErrorBoundary>
         </>
     )
 }

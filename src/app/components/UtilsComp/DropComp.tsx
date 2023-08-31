@@ -22,31 +22,47 @@ export function DropComp(props: DropCompProps) {
             return
         }
 
-        const reader = new FileReader();
-        reader.onload = async ({ target }) => {
+        try {
+            
+            const reader = new FileReader();
+            reader.onload = async ({ target }) => {
+    
+                const csv = Papa.parse(target.result as any, { header: true });
+                const parsedData = csv?.data;
+                // const columnsKeys = Object.keys(parsedData[0]);
+    
+                !!props.setData && props.setData(parsedData as CSVDataArray);
+                toast.success("success to upload", { position: "top-right" });
+            };
+    
+            if(files[0].type === "text/csv"){
+                reader.readAsText(files[0]);
+            }
+            else if(files[0].type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
 
-            const csv = Papa.parse(target.result as any, { header: true });
-            const parsedData = csv?.data;
-            // const columnsKeys = Object.keys(parsedData[0]);
+                try {   
 
-            !!props.setData && props.setData(parsedData as CSVDataArray);
-            toast.success("success to upload", { position: "top-right" });
-        };
+                    const data = await files[0].arrayBuffer();
+                    const workbook = XLSX.read(data);
 
-        if(files[0].type === "text/csv"){
-            reader.readAsText(files[0]);
+                    const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const result:object[] = XLSX.utils.sheet_to_json(first_worksheet, { header: 0, raw:true });
+        
+                    !!props.setData && props.setData(result as CSVDataArray);
+        
+                    toast.success("success to upload", { position: "top-right" });
+                }
+                catch (error: any) {
+                    toast.error(error.massage, { position: "top-right" });
+                    return
+                }
+            }
         }
-        else if(files[0].type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
-            const data = await files[0].arrayBuffer();
-            const workbook = XLSX.read(data);
-
-            const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            const result:object[] = XLSX.utils.sheet_to_json(first_worksheet, { header: 0, raw:true });
-
-            !!props.setData && props.setData(result as CSVDataArray);
-
-            toast.success("success to upload", { position: "top-right" });
+        catch (error: any) {
+            toast.error(error.massage, { position: "top-right" });
+            return
         }
+
 
     }
 
@@ -55,7 +71,7 @@ export function DropComp(props: DropCompProps) {
         <Text mb={6} c="dimmed" fz={12}>Import Data</Text>
         <Dropzone
             onDrop={(files) => reciveFile(files)}
-            onReject={(files) => console.log('rejected files', files)}
+            onReject={() => toast.error('rejected files')}
             maxSize={3 * 1024 ** 300}
             accept={['text/csv', "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]}
             multiple={false}

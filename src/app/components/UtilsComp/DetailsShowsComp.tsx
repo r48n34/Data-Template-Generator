@@ -18,15 +18,20 @@ function DetailsShowsComp({ data, frameInfo }: DetailsShowsCompProps){
     return (
         <>
         <Grid>
+
+            <Tooltip label="Total headers count">
             <Grid.Col span={8}>
                 <Text color="dimmed" size="sm">Headers: (Total {Object.keys(data[0]).length})</Text>
                 <Text size="sm">{Object.keys(data[0]).join(", ")}</Text>
             </Grid.Col>
+            </Tooltip>
 
+            <Tooltip label="Total records count">
             <Grid.Col span={4}>
                 <Text color="dimmed" size="sm">Record count</Text>
                 <Text size="sm">{data.length}</Text>
             </Grid.Col>
+            </Tooltip>
 
             <Tooltip label="Rename your text node starting with @xxx">
             <Grid.Col span={8}>

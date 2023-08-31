@@ -2,6 +2,22 @@
 
 Quick easy user-friendly data template generator to save your time!
 
+## Intro
+
+A alternative tools to generate massive template CSV / XLSX.
+
+This plugin can be use in the following cases:
+
+- Generate members card
+- Emails template images
+- Reports
+- and more...
+
+Usage:
+
+1. Open this plugins
+2. Prepare a valid CSV / XLSX file
+
 ## Using stack
 
 - React
