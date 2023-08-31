@@ -8,7 +8,7 @@ Quick easy user-friendly data template generator to save your time!
 
 ## Intro
 
-A alternative tools to generate massive template CSV / XLSX.
+An alternative tool to generate massive template CSV / XLSX.
 
 This plugin can be use in the following cases:
 
