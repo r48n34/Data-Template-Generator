@@ -11,11 +11,14 @@ export function generateFrame(data: Record<string, string>[]){
         // For y pol
         newCopy.y = oldY + newCopy.height + 100;
 
-        for(let v of newCopy.children){
+        // Entire document nodes search
+        const allTextNode = newCopy.findAll(node => {
+            return node.type === "TEXT"
+        })
 
-            // console.log(v.name);
+        for(let v of allTextNode){
             const rawName = v.name.replace("#", "");
-            
+
             if(v.type === "TEXT" && v.name && columnsKeys.includes(rawName)){
                 console.log("MATCH")
                 v.characters = data[i][rawName]
