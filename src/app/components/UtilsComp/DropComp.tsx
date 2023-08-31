@@ -7,6 +7,7 @@ import { Dropzone, DropzoneProps, FileWithPath } from '@mantine/dropzone';
 import Papa from "papaparse";
 import XLSX from "xlsx";
 import { CSVDataArray } from '../../interface/generatInterface';
+import toast from 'react-hot-toast';
 
 interface DropCompProps extends Partial<DropzoneProps> {
     setData: Function
@@ -26,10 +27,10 @@ export function DropComp(props: DropCompProps) {
 
             const csv = Papa.parse(target.result as any, { header: true });
             const parsedData = csv?.data;
-
             // const columnsKeys = Object.keys(parsedData[0]);
 
-            !!props.setData && props.setData(parsedData as CSVDataArray)
+            !!props.setData && props.setData(parsedData as CSVDataArray);
+            toast.success("success to upload", { position: "top-right" });
         };
 
         if(files[0].type === "text/csv"){
@@ -42,7 +43,9 @@ export function DropComp(props: DropCompProps) {
             const first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const result:object[] = XLSX.utils.sheet_to_json(first_worksheet, { header: 0, raw:true });
 
-            !!props.setData && props.setData(result as CSVDataArray)
+            !!props.setData && props.setData(result as CSVDataArray);
+
+            toast.success("success to upload", { position: "top-right" });
         }
 
     }
