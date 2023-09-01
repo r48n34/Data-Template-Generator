@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Grid, Group, Select, Space } from "@mantine/core";
+import { Button, Container, Grid, Group, Select, Space, Tooltip } from "@mantine/core";
+import { CSVDataArray, CheckNodeTextType } from "../../interface/generatInterface";
+import { ErrorBoundary } from "react-error-boundary";
+
 import { DropComp } from "../UtilsComp/DropComp";
 import FortuneSheetComp from "../UtilsComp/FortuneSheetComp";
 import TimeLineGuide from "../UtilsComp/TimeLineGuide";
 import DetailsShowsComp from "../UtilsComp/DetailsShowsComp";
-import { CSVDataArray, CheckNodeTextType } from "../../interface/generatInterface";
-import { ErrorBoundary } from "react-error-boundary";
 import ErrorComp from "../UtilsComp/ErrorComp";
+
+import { IconFileUnknown, IconUpload } from "@tabler/icons-react";
 
 interface MainCompProps {
     isFrameGroupSelected: CheckNodeTextType
@@ -80,16 +83,43 @@ function MainComp({ isFrameGroupSelected }:MainCompProps) {
                                 required
                             />
 
-                            <Group position="right" mt={16}>
+                            <Group position="right" mt={24}>
+                                
+                                <Tooltip label="Ingore the missing attribute and generate">
                                 <Button
+                                    leftIcon={<IconFileUnknown/>}
+                                    variant="light"
                                     onClick={() => onCreate()}
                                     disabled={
-                                           !isFrameGroupSelected.status
-                                        || Object.keys(data[0]).map( v => "@" + v).filter(x => !isFrameGroupSelected.cols.includes(x)).length >= 1
+                                        !isFrameGroupSelected.status
+                                        || Object.keys(data[0])
+                                        .map( v => "@" + v)
+                                        .filter(x => !isFrameGroupSelected.cols.includes(x))
+                                        .length <= 0
+                                    }
+                                >
+                                    Generate with missing 
+                                </Button>
+                                </Tooltip>
+
+                                <Tooltip label={`Generate ${data.length} items`}>
+                                <Button
+                                    leftIcon={<IconUpload/>}
+                                    variant="light"
+                                    color="teal"
+                                    onClick={() => onCreate()}
+                                    disabled={
+                                        !isFrameGroupSelected.status
+                                        || Object.keys(data[0])
+                                            .map( v => "@" + v)
+                                            .filter(x => !isFrameGroupSelected.cols.includes(x))
+                                            .length >= 1
                                     }
                                 >
                                     Generate
                                 </Button>
+                                </Tooltip>
+
                             </Group>
                             </>
                         )}

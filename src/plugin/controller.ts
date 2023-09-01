@@ -3,7 +3,7 @@ import { checkAllNecessaryKeyExistInFrame, generateFrame } from "./utils/generat
 
 figma.showUI(__html__, {
     width: 800,
-    height: 700
+    height: 720
 });
 
 figma.on("selectionchange", async () => {

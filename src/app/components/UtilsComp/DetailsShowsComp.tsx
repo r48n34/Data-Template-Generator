@@ -22,14 +22,14 @@ function DetailsShowsComp({ data, frameInfo }: DetailsShowsCompProps){
             <Tooltip label="Total headers count">
             <Grid.Col span={8}>
                 <Text color="dimmed" size="sm">Headers: (Total {Object.keys(data[0]).length})</Text>
-                <Text size="sm">{Object.keys(data[0]).join(", ")}</Text>
+                <Text size="md">{Object.keys(data[0]).join(", ")}</Text>
             </Grid.Col>
             </Tooltip>
 
             <Tooltip label="Total records count">
             <Grid.Col span={4}>
                 <Text color="dimmed" size="sm">Record count</Text>
-                <Text size="sm">{data.length}</Text>
+                <Text size="md">{data.length}</Text>
             </Grid.Col>
             </Tooltip>
 
@@ -39,8 +39,8 @@ function DetailsShowsComp({ data, frameInfo }: DetailsShowsCompProps){
                 <Text size="sm" c={ missingStuff.length >= 1 ? "red" : "dimmed"}>Missing Text Node</Text>
 
                 { missingStuff.length >= 1 
-                    ? (<Text size="sm">{missingStuff.join(", ")}</Text>)
-                    : (<Text size="sm">Good, nothing missing</Text>)
+                    ? (<Text size="md">{missingStuff.join(", ")}</Text>)
+                    : (<Text size="md">Good, nothing missing</Text>)
                 }
 
             </Grid.Col>
@@ -49,7 +49,7 @@ function DetailsShowsComp({ data, frameInfo }: DetailsShowsCompProps){
             <Tooltip label="Select a Frame from left">
             <Grid.Col span={4}>
                 <Text c={ frameInfo.status ? "dimmed" : "red" } size="sm">Frame Selected</Text>
-                <Text size="sm">{frameInfo.status ? "Yes" : "No"}</Text>
+                <Text size="md">{frameInfo.status ? "Yes" : "No"}</Text>
             </Grid.Col>
             </Tooltip>
 

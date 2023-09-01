@@ -6,8 +6,9 @@ import { Dropzone, DropzoneProps, FileWithPath } from '@mantine/dropzone';
 
 import Papa from "papaparse";
 import XLSX from "xlsx";
-import { CSVDataArray } from '../../interface/generatInterface';
 import toast from 'react-hot-toast';
+
+import { CSVDataArray } from '../../interface/generatInterface';
 
 interface DropCompProps extends Partial<DropzoneProps> {
     setData: Function
