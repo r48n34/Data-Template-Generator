@@ -1,4 +1,4 @@
-# Data Template Generator
+# 📊 Data Template Generator
 
 https://www.figma.com/community/plugin/1279091016427867596/Data-Template-Generator
 
@@ -6,10 +6,9 @@ https://www.figma.com/community/plugin/1279091016427867596/Data-Template-Generat
 
 Quick easy user-friendly data template generator to save your time!
 
-## Intro
+## 👋 Intro
 
 An alternative tool to generate massive template CSV / XLSX.
-
 This plugin can be use in the following cases:
 
 - Generate members card
@@ -17,7 +16,7 @@ This plugin can be use in the following cases:
 - Reports
 - and more...
 
-Usage:
+## 🤔 Usage
 
 1. Open this plugin
 2. Prepare a valid CSV / XLSX file
@@ -27,13 +26,17 @@ Usage:
 6. If all things ready, the plugin will allow you to generate 
 7. Enjoy your stuff
 
-## Using stack
+## 💻 Using stack
 
 - React
 - Mantine
 - react-hot-toast
 
-## References
+## 📚 References
 
 This plugins is start with `Figma Plugin React Template` from
 https://github.com/nirsky/figma-plugin-react-template
+
+
+## 🚗 License
+MIT License
